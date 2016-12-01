@@ -14,34 +14,27 @@ pw (){
   local PSOPTS='-ww -o user,pid,ppid,stime,tname,stat,cmd'
 
   [[ ${#@} -eq 0 ]] && {
-
     eval ps -u $USER $PSOPTS|while read;do
       echo -en "\e[38;5;$(($RANDOM % 256))m"
       echo $REPLY
       echo -en "\e[0m"
-  done
+    done
     return
-
   } || {
-
     # in case of shell alias `pgrep` with problematic opts
     PGREP=$(which -a pgrep|egrep --color=never '^/.*bin.*/pgrep$'|head -1) && \
     [[ -x $PGREP ]] && \
-
-    # list matching pids
-    HITS=($($PGREP -f $@)) && \
-
-    # return error if none
-    [[ ${#HITS} -gt 0 ]] && \
-
-    # for each do long print for parent and children
-    for PID in ${HITS[@]};do
-      echo -en "\e[38;5;$(($RANDOM % 256))m"
-      eval ps $PSOPTS               --pid $PID && \
-      eval ps $PSOPTS --no-headers --ppid $PID || return 1
-      echo -en "\e[0m"
-    done
-
+     # list matching pids
+     HITS=($($PGREP -f $@)) && \
+      # return error if none
+      [[ ${#HITS} -gt 0 ]] && \
+       # for each do long print for parent and children
+       for PID in ${HITS[@]};do
+         echo -en "\e[38;5;$(($RANDOM % 256))m"
+         eval ps $PSOPTS               --pid $PID && \
+         eval ps $PSOPTS --no-headers --ppid $PID || return 1
+         echo -en "\e[0m"
+       done
   } || return 1
 }
 
