@@ -68,7 +68,7 @@ case ${SHEBANG[bin]} in
 esac
 
 # create color on/off aliases for common commands (e.g., ls for on, nls for off)
-for NAME in {e,r,o,v,s,x,}grep ls nmcli watch;do
+for NAME in {e,r,o,v,s,x,}grep ls nmcli watch dmesg;do
   # refer to self if not defined
   for ALT in {,n}${NAME};do
     [[ -z "$(eval echo \${${SHEBANG[aliases]}[$ALT]})" ]] && {
@@ -76,7 +76,7 @@ for NAME in {e,r,o,v,s,x,}grep ls nmcli watch;do
     }
   done
   case $NAME in
-    *grep|ls) 
+    *grep|ls|dmesg)
       COLORON='--color=always'
       NOCOLOR='--color=never'
       ;;

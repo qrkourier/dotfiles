@@ -1,4 +1,6 @@
 
+export ASSUME='-n <arn of role to assume, if any>'
+
 credvers() {
   #
   # kbingham: 2016
@@ -30,7 +32,7 @@ credvers() {
   : ${VERSION:=1}
   # increment and interate until a version is not found or MAXVERS decrements
   # to exactly 0
-  while [[ $MAXVERS -gt 0 || $MAXVERS -lt 0 ]] && GOT=$(credstash -n arn:aws:iam::839581587094:role/sysops get $1 \
+  while [[ $MAXVERS -gt 0 || $MAXVERS -lt 0 ]] && GOT=$(credstash $ASSUME get $1 \
     -v$(printf '%019d' $VERSION) 2>/dev/null); do
       printf '%019d: %s\n' $VERSION $GOT;
       let VERSION++
@@ -51,6 +53,6 @@ credput() {
       set -- $REPLY;
   }
   echo -n "Enter credential to store as '$1' (invisible) > ";read -sr
-  credstash -n arn:aws:iam::839581587094:role/sysops put $1 $REPLY -a
+  credstash $ASSUME put $1 $REPLY -a
 }
 

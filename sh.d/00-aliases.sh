@@ -47,10 +47,27 @@ alias histoff="HISTOFF=$HISTFILE;HISTFILE=/dev/null;"
 # on the record
 alias histon="HISTFILE=${HISTOFF:=~/.zhistory}"
 # enforce ECDHE for chrome
-alias chrome='chromium-browser --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15'
+alias chrome='nohup google-chrome --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15 &'
 # physical
 alias pwdp='pwd -P'
 # logical
 alias pwdl='pwd -L'
 # print active nameservers
 alias dns='nmcli d sh|egrep DNS'
+# get the Ansible vault password from stdout of an executable (via credstash)
+alias ansible-vault='ansible-vault --vault-password-file=~/ansible/bin/get-vault-password.sh'
+alias ansible-playbook='ansible-playbook --vault-password-file=~/ansible/bin/get-vault-password.sh'
+# prefer v2 personality
+alias gpg='gpg2'
+# gpg2 has different rules about options
+alias gpg2='gpg2 --options ~/.gnupg/gpg2.conf'
+# list fingerprints of signing key and all auth and encrypt subkeys
+alias gpgls='gpg --fingerprint{,} --list-secret-keys'
+# filter environment variables for case-sensitive pattern
+alias envgrep='{ env; set; }|sort -u|egrep -a'
+
+alias dps='sudo docker ps'
+alias dst='sudo docker stop'
+alias drm='sudo docker rm'
+
+
