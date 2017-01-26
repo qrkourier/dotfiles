@@ -13,7 +13,7 @@ credvers() {
   # $3 = maximum number of versions to print (defaults to 1 if $2)
   #
   # print all versions unless otherwise specified in $3
-  local GOT VERSION MAXVERS=-1
+  local GOT VERSION MAXVERS=-1 
   # prompt for and set 1 the principal in $1 unless given
   [[ $# -eq 0 ]] && {
     echo -n "Enter principal to list versions > ";read -r
